@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>サイバーリテラシー教材</title>
+    <meta name="education" content="サイバーリテラシー、情報セキュリティ">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h1>ようこそ！サイバーリテラシー学習</h1>
+
+    <!-- 学年選択画面 -->
+    <div id="grade-selection">
+        <button onclick="toggleSelect()">中学生</button>
+        <select id="middle-school-select" onchange="selectGrade(this.value)" style="display:none;">
+            <option value="">選んでください</option>
+            <option value="中学１年生">中学１年生</option>
+            <option value="中学２年生">中学２年生</option>
+            <option value="中学３年生">中学３年生</option>
+        </select>
+        <button onclick="selectGrade('高校生')">高校生</button>
+    </div>
+    
+
+    <!-- 切り替えボタン -->
+    <button id="toggle-btn" onclick="toggleView()" style="display:none;">教師・生徒切り替え</button>
+
+    <!-- 生徒用ビュー -->
+    <div id="student-view" style="display:none; margin-top:20px;">
+        <h2>生徒用ページ</h2>
+        <button onclick="startMission()">ミッションスタート</button>
+
+        <!-- 問題エリア -->
+        <div id="question-container" style="display:none; margin-top:20px;">
+            <p id="question-text">ここに問題文が表示されます</p>
+            <div id="choices"><!-- 選択肢ボタン --></div>
+        </div>
+    </div>
+
+    <!-- 教師用ビュー -->
+    <div id="teacher-view" style="display:none; margin-top:20px;">
+        <h2>教師用ページ</h2>
+        <p>ここでは生徒の進捗やスコアを確認できます。</p>
+        <button onclick="showProgress()">進捗を見る</button>
+        <div id="progress-container"><!-- 進捗データ表示 --></div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>
