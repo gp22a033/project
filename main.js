@@ -1,4 +1,7 @@
-let selectedGrade = ""; // 選択された学年を格納
+let selectedGrade = ""; // 学年を格納
+let studentName = ""; // 名前の格納
+let progressLog = []; // 回答結果ログ（正誤）
+
 
 // 学年選択時の処理
 function toggleSelect() {
@@ -6,20 +9,21 @@ function toggleSelect() {
     select.style.display = select.style.display === 'none' ? 'inline' : 'none';
 }
 
-function selectGrade(grade) {
-    if (grade) {
-        selectedGrade = grade;
-        alert(`${grade}を選択しました！`);
-
-        // プルダウンを非表示にする
-        document.getElementById('middle-school-select').style.display = "none";
-
-        // 学年選択画面を非表示にして、切り替えボタンと生徒画面を表示
-        document.getElementById('grade-selection').style.display = "none";
-        document.getElementById('toggle-btn').style.display = "block";
-        document.getElementById('student-view').style.display = "block";
+function selectGrade() {
+    studentName = document.getElementById('student-name').value.trim();
+    selectedGrade = document.getElementById('grade-select').value;
+  
+    if (!studentName) {
+      alert("名前を入力してください");
+      return;
     }
-}
+  
+    alert(`${selectedGrade} の ${studentName} さんですね！`);
+    document.getElementById('grade-selection').style.display = "none";
+    document.getElementById('toggle-btn').style.display = "block";
+    document.getElementById('student-view').style.display = "block";
+  }
+  
 
 // 画面切り替え
 function toggleView() {
@@ -83,6 +87,32 @@ function checkAnswer(selectedIndex, correctIndex, explanation) {
 
 // （仮）進捗表示機能
 function showProgress() {
-    const container = document.getElementById('progress-container');
-    container.innerHTML = "<p>進捗データ機能はこれから実装します。</p>";
-}
+    const container = document.getElementById("progress-container");
+    container.innerHTML = "";
+  
+    const score = progressLog.filter(r => r === "正解").length;
+    const log = {
+      生徒名: studentName,
+      学年: selectedGrade,
+      スコア: score,
+      問題履歴: progressLog
+    };
+  
+    const div = document.createElement("div");
+    div.innerHTML = `
+      <h4>${log.生徒名}（${log.学年}）</h4>
+      <p>スコア: ${log.スコア}</p>
+      <p>履歴: ${log.問題履歴.join(" / ")}</p>
+      <hr>
+    `;
+    container.appendChild(div);
+  }
+  
+  
+function checkAnswer(selectedIndex, correctIndex, explanation) {
+    const result = selectedIndex === correctIndex ? "正解" : "不正解";
+    progressLog.push(result); // 正誤を記録
+  
+    alert(`${result}！\n${explanation}`);
+  }
+  
